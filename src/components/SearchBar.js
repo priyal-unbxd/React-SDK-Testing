@@ -17,10 +17,11 @@ const SearchBar = () => {
       <a href="/">
         <span className="UNX-header__logo"></span>
       </a>
-      <div className="UNX-header__search">
+      <div className="UNX-header__search" id="searchInput">
         <SearchBox
           submitComponent={<SearchButton />}
-          placeholder={unbxdSearchConfig.searchBoxPlaceholder}
+          // placeholder={unbxdSearchConfig.searchBoxPlaceholder}
+          placeholder="Hello"
         />
       </div>
     </div>

@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 export default function Product(props) {
   const { state, dispatch } = useContext(AppContext);
   let params = useParams();
-  console.log(params, 'params');
+
   const [product, setProduct] = useState(null);
   useEffect(() => {
     fetch(
@@ -28,6 +28,7 @@ export default function Product(props) {
         setProduct(products[0]);
       });
   }, []);
+  
   return (
     <section className="product-wrapper">
       {product ? (

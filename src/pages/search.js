@@ -35,7 +35,7 @@ export default function Search() {
     searchQueryParam: 'q',
     hashMode: false,
   };
-  console.log(state, 'state');
+
 
   const handleRouteChange = (searchObj, hash, refreshId) => {
     const { state = {} } = searchObj;

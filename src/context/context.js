@@ -37,7 +37,6 @@ function reducer(state, action) {
 function AppProvider({ children }) {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q');
-  console.log(searchParams);
   const [state, dispatch] = useReducer(reducer, {
     type:
       window.location.pathname.indexOf('/category') === 0 ? CATEGORY : SEARCH,

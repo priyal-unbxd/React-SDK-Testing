@@ -25,6 +25,7 @@ export default function Header() {
   const { state, dispatch } = useContext(AppContext);
   const [searchInput, setSearchInput] = useState(state.searchTerm);
   let navigate = useNavigate();
+// console.log(document.getElementById('searchInput  '))
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -63,6 +64,7 @@ export default function Header() {
                 onChange={(e) => {
                   setSearchInput(e.target.value);
                 }}
+                id="searchBox"
                 value={searchInput}
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search for a product"
