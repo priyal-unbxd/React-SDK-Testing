@@ -53,9 +53,11 @@ export default function Search() {
     }
     return false;
   };
+
   const onProductClick = (product) => {
     routeHistory(`/product/${product.uniqueId}`);
   };
+  
   const { refreshId } = state;
   return (
     <div>

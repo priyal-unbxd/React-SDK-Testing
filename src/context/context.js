@@ -34,12 +34,13 @@ function reducer(state, action) {
     }
   }
 }
+
 function AppProvider({ children }) {
   const [searchParams] = useSearchParams();
-  const query = searchParams.get('q');
+  const query = searchParams.get('q')
   const [state, dispatch] = useReducer(reducer, {
     type:
-      window.location.pathname.indexOf('/category') === 0 ? CATEGORY : SEARCH,
+    window.location.pathname.indexOf('/category') === 0 ? CATEGORY : SEARCH,
     searchTerm: query || '',
     categoryType: '',
     refreshId: 0,

@@ -8,7 +8,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { AppContext } from '../context/context.js';
 import { SEARCH_ACTION } from '../constants/index.js';
 import categoryMap from '../constants/categoryMap.js';
-
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,12 +19,90 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { AppProvider } from "../context/context.js";
+import unbxdSearchConfig from '../unbxd-search.config.json';
 
 export default function Header() {
   const { state, dispatch } = useContext(AppContext);
   const [searchInput, setSearchInput] = useState(state.searchTerm);
   let navigate = useNavigate();
-// console.log(document.getElementById('searchInput  '))
+
+  useEffect(()=>{
+    $("#searchBox").unbxdautocomplete({
+			siteName : `${unbxdSearchConfig.siteKey}`
+			,APIKey : `${unbxdSearchConfig.apiKey}` 
+			,minChars : 1
+			,maxSuggestions: 20
+      		,suggestionsHeader: "<h1>Hello</h1>"
+			,delay : 200
+			,loadingClass : 'unbxd-as-loading'
+			,mainWidth : 300
+			,sideWidth :300
+			,zIndex : 0
+			,position : 'absolute'
+			,template : "2column"
+			,mainTpl: ['inFields', 'topQueries']
+			,sideTpl: ['keywordSuggestions', 'popularProducts']
+			,sideContentOn : "left"
+			,showCarts : true
+			,cartType : "inline"
+      		,noResultTpl: function (){
+        		return `<div class="no_products"><b>Sorry , No Products found !! :(</b></div>`
+      		}
+			,onSimpleEnter : function(){
+			}
+			,onItemSelect : function(data,original){
+				if(data.type=='POPULAR_PRODUCTS'){
+					navigate(`/product/${data.pid}`)
+				}else{
+					dispatch({
+						type: SEARCH_ACTION,
+						searchTerm: data.value,
+						refreshId: state.refreshId++,
+					  });
+        setSearchInput(data.value)
+					navigate(`/search?q=${data.value}`)
+				}
+			}
+			,onCartClick : function(data,original){
+				return true;
+			}
+			,inFields:{
+				count: 3
+        		,type:"separate"
+				,fields:{
+					'brand':3
+					,'category':3
+					,'color':3
+				}
+				,header: '10% off on everything for Today !!'
+				,tpl: ''
+			}
+			,topQueries:{
+				count: 2
+				,header: 'Today\'s Top Buys!'
+				,tpl: ''
+			}
+			,keywordSuggestions:{
+				count: 2
+				,header: 'Matching Keywords'
+				,tpl: ''
+			}
+			,popularProducts:{
+				count: 2
+				,price: true
+				,priceFunctionOrKey : "price"
+				,image: true
+				,imageUrlOrFunction: "imageUrl"
+				,currency : "Rs."
+				,header: 'Popular Finds'
+				,tpl: ''
+			}
+			,filtered : true,
+			platform: 'io'
+		});
+  },[])
+
   return (
     <AppBar position="static">
       <Container maxWidth="xl">

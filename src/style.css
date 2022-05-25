@@ -51,3 +51,7 @@ p {
 .product-wrapper {
   padding-top: 24px;
 }
+
+.no_products {
+  padding:40px;
+}
